@@ -107,9 +107,14 @@ public:
     
     static void getEAX4() {
         uint32_t eax, ebx, ecx, edx;
-        cpuid(1, 0, eax, ebx, ecx, edx);
-        int leaf = 4;
-        int subleaf = 0;
+
+        cpuid(0x80000002, 0, eax, ebx, ecx, edx);
+        std::string ven = std::string(reinterpret_cast<char*>(&eax), 3);
+        uint32_t leaf = 4;
+        if (ven == "AMD") {
+            leaf = 0x8000001D;
+        }
+        uint32_t subleaf = 0;
         uint32_t procCores = 0;
 
         std::cout << "============== EAX = 4 ==============" << std::endl << std::endl;
@@ -264,7 +269,6 @@ public:
     static void getEAX80000002h_80000004h() {
         uint32_t eax, ebx, ecx, edx;
         std::string brand;
-        
         for (uint32_t i = 0x80000002; i <= 0x80000004; ++i) {
             cpuid(i, 0, eax, ebx, ecx, edx);
             brand += std::string(reinterpret_cast<char*>(&eax), 4);
