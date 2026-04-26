@@ -160,8 +160,8 @@ int main()
     std::printf("  Различающихся пикселей: %d из %d\n", diff_count, N);
 
     save_pgm("./source.pgm",      src.data(),         W, H);
-    save_pgm("./blur_scalar.pgm", dst_scalar.data(),  W, H);
-    save_pgm("./blur_avx2.pgm",   dst_simd.data(),    W, H);
+    save_pgm("./scalar.pgm", dst_scalar.data(),  W, H);
+    save_pgm("./avx2.pgm",   dst_simd.data(),    W, H);
 
     return 0;
 }
